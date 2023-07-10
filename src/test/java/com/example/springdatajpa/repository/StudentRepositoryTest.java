@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 @SpringBootTest
+//@DataJpaTest // use if you want to flush the data
 class StudentRepositoryTest {
     @Autowired
     private StudentRepository studentRepository;
@@ -44,4 +45,46 @@ class StudentRepositoryTest {
         List<Student> studentList = studentRepository.findAll();
         System.out.println("studentList = " + studentList);
     }
+
+    @Test
+    public void printStudentByFirstName(){
+        List<Student> studentList = studentRepository.findByFirstName("ismail");
+        System.out.println("studentList = " + studentList);
+    }
+    @Test
+    public void printStudentByFirstNameContaining(){
+        List<Student> studentList = studentRepository.findByFirstNameContaining("sma");
+        System.out.println("studentList = " + studentList);
+    }
+
+    @Test
+    public void printStudentBasedOnGuardianName(){
+        List<Student> students =
+                studentRepository.findByGuardianName("guardian1");
+        System.out.println("students = " + students);
+    }
+
+    @Test
+    public void printStudentByFirstNameAndLastName(){
+        Student student = studentRepository.findByFirstNameAndLastName("ismail","Güven");
+        System.out.println("student = " + student);
+    }
+
+    @Test
+    public void printStudentByEmailAddress(){
+        Student student = studentRepository.getStudentByEmail("ismail@gmail.com");
+        System.out.println("student = " + student);
+    }
+    @Test
+    public void printStudentByEmailAddressNative(){
+        Student student = studentRepository.getStudentByEmailNative("ismail@gmail.com");
+        System.out.println("student = " + student);
+    }
+
+    @Test
+    public void printStudentByEmailAddressNativeWithParam(){
+        Student student = studentRepository.getStudentByEmailNative("ismail@gmail.com");
+        System.out.println("student = " + student);
+    }
+
 }
