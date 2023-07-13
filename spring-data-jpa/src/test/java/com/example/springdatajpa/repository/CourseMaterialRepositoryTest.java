@@ -16,7 +16,7 @@ class CourseMaterialRepositoryTest {
     @Test
     public void saveCourseMaterial(){
         Course course = Course.builder()
-                .courseTitle("DSA")
+                .title(".net")
                 .credit(6)
                 .build();
 

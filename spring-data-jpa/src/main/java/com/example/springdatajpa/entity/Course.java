@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -26,6 +29,45 @@ public class Course {
             generator = "course_sequence"
     )
     private Long courseId;
-    private String courseTitle;
+    private String title;
     private int credit;
+
+    // by defining that this one-one mapping is
+    // already defined by the courses attribute in CourseMaterial
+    @OneToOne(
+            mappedBy = "course"
+    )
+    private CourseMaterial courseMaterial;
+
+    @ManyToOne(
+            cascade = CascadeType.ALL
+    )
+    @JoinColumn(
+            name = "teacher_id",
+            referencedColumnName = "teacherId"
+    )
+    private Teacher teacher;
+
+    @ManyToMany(
+            cascade = CascadeType.ALL
+    )
+    @JoinTable(
+            name = "student_course_map",
+            joinColumns = @JoinColumn(
+                    name = "course_id", // db definition
+                    referencedColumnName = "courseId" // class definition
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "student_id",
+                    referencedColumnName = "studentId"
+            )
+    )
+    private List<Student> students;
+
+    public void addStudents(Student student) {
+        if (students == null) {
+            students = new ArrayList<>();
+            students.add(student);
+        }
+    }
 }

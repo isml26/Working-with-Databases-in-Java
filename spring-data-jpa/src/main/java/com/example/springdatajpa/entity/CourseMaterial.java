@@ -30,9 +30,17 @@ public class CourseMaterial {
     private Long courseMaterialId;
     private String url;
 
+    /*
+    LAZY = fetch when needed
+    EAGER = fetch immediately
+
+    To load it together with the rest of the fields (i.e. eagerly), or
+    To load it on-demand (i.e. lazily) when you call the university's getStudents() method.
+     */
     @OneToOne(
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            optional = false // whenever save course also course material is required
     )
     @JoinColumn(
             name="course_id",
